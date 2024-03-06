@@ -25,6 +25,7 @@ class ArticleController( val repository: ArticleRepository) {
 
     @PostMapping
     fun newArticle(@RequestBody article: Article): Article {
+        article.id = null
         repository.save(article)
         return  article
     }
