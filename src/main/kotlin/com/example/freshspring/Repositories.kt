@@ -7,4 +7,6 @@ interface ArticleRepository: JpaRepository<Article, Long> {
      * The Article repository Interface.
      */
     fun findAllByOrderByCreatedAtDesc(): Iterable<Article>
+    fun findBySlug(slug: String): Article
+
 }
