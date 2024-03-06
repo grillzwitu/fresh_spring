@@ -16,13 +16,13 @@ import org.springframework.web.server.ResponseStatusException
 @RequestMapping("api/v1/articles")
 class ArticleController {
 
-    val articles = mutableListOf(Article("First Article", "The first Article"))
+    val articles = mutableListOf(Article(1,"First Article", "The first Article"))
 
     @GetMapping
     fun articles() = articles
 
-    @GetMapping("/{title}")
-    fun articles(@PathVariable title: String): Article = articles.find { article -> article.title == title } ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+    @GetMapping("/{slug}")
+    fun articles(@PathVariable slug: String): Article = articles.find { article -> article.slug == slug } ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
     @PostMapping
     fun newArticle(@RequestBody article: Article): Article {
@@ -30,15 +30,16 @@ class ArticleController {
         return  article
     }
 
-    @PutMapping("/{title}")
-    fun updateArticle(@RequestBody article: Article, @PathVariable title: String): Article{
-        val existingArticle = articles.find { it.title == title } ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+    @PutMapping("/{slug}")
+    fun updateArticle(@RequestBody article: Article, @PathVariable slug: String): Article{
+        val existingArticle = articles.find { it.slug == slug } ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
         existingArticle.content = article.content
         return  article
     }
 
-    @DeleteMapping("/{title}")
-    fun  deleteArticle(@PathVariable title: String) {
-        articles.removeIf { article -> article.title == title }
+    @DeleteMapping("/{slug}")
+    fun  deleteArticle(@PathVariable slug: String) {
+        articles.removeIf { article -> article.slug == slug }
     }
+
 }
