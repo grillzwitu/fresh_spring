@@ -34,6 +34,7 @@ class ArticleController( val repository: ArticleRepository) {
     fun updateArticle(@RequestBody article: Article, @PathVariable slug: String): Article{
         val existingArticle = repository.findBySlug(slug) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
         existingArticle.content = article.content
+        repository.save(article)
         return  article
     }
 
